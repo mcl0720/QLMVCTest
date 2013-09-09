@@ -1,33 +1,108 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@section featured {
-    @*<section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title.</h1>
-                <h2>@ViewBag.Message</h2>
-            </hgroup>
-            <p>
-                To learn more about ASP.NET MVC visit
-                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
-                If you have any questions about ASP.NET MVC visit
-                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
-            </p>
-        </div>
-    </section>*@
-}
-    <div class="container">
 
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Navbar example</h1>
-        <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+@section Styles {
+    <style type="text/css">
+        .homelists {
+            height: 25px;
+            line-height: 25px;
+        }
+    </style>
+}
+
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Currently Available</h2>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">IT Friday Lunch</a>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">Who's funnier?</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Recently Completed</h2>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">Test 1</a>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">Test 2</a>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">Test 3</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>My Creations</h2>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">This one</a>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">That one</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Another heading</h2>
+                </div>
+            </div>
+            <div class="row homelists">
+                <div class="col-md-12">
+                    <a href="#">Test 1</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*    <div class="row">
+        <div class="col-md-6">
+            <a href="#">IT Friday Lunch</a>
+        </div>
+        <div class="col-md-6">
+            <a href="#">Who's funnier?</a>
+        </div>
+    </div>*@
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+    </div>
+    @*<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>To see the difference between static and fixed top navbars, just scroll.</p>
         <p>
           <a class="btn btn-lg btn-primary" href="../../components/#navbar">View navbar docs &raquo;</a>
-        </p>
-      </div>
-
-    </div> <!-- /container -->
+        </p>*@
+</div>
