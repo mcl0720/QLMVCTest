@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@section Styles {
+    <style type="text/css">
+        .questionframe {
+            -webkit-box-shadow: none;
+            background-color: rgb(255, 255, 255);
+            border-color: rgb(221, 221, 221);
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            box-shadow: none;
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            display: block;
+            margin: 15px 0px 15px 0px;
+            padding: 15px;
+        }
+
+        .question-remove {
+            position:relative;
+            top: -28px;
+            right: -10px;
+        }
+    </style>
+}
+
+<form role="form" >
+    <input  type="text" class="form-control" id="surveyTitle" placeholder="Enter Survey Title"/>
+</form>
+<form class="questionframe" role="form">
+    <div class="text-right">
+    <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+        </div>
+    @*<div class="questionframe">*@
+    <div class="form-group">
+        <label for="exampleInputEmail1">Question</label>
+        <input type="text" class="form-control" id="questionInput" placeholder="Enter question">
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox"/>
+        </label>
+        <input type="text" placeholder="Enter option" />
+    </div>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox"/>
+        </label>
+        <input type="text" placeholder="Enter option" />
+    </div>
+
+    <div class="checkbox">
+        <label>
+            <input type="checkbox"/>
+        </label>
+        <input type="text" placeholder="Enter option" />
+    </div>
+    <a href="#">+ Add new control</a>
+    @*</div>*@
+</form>
+<div class="text-right" style="margin-bottom:15px">
+<a href="#" >+ Add new question</a>
+    </div>

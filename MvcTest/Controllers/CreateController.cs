@@ -16,5 +16,15 @@ namespace MvcTest.Controllers
             return View();
         }
 
+        public ActionResult Survey()
+        {
+            return View();
+        }
+
+        public ActionResult Vote()
+        {
+            return View();
+        }
+
     }
 }

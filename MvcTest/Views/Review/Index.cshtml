@@ -2,4 +2,138 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#completed" data-toggle="tab">Completed</a></li>
+    <li><a href="#created" data-toggle="tab">Created</a></li>
+    @*<li><a href="#messages">Messages</a></li>
+    <li><a href="#settings">Settings</a></li>*@
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="completed">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td><strong>Name</strong>
+                        </td>
+                        <td><strong>Created By</strong>
+                        </td>
+                        <td><strong>Date Submitted</strong>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="#">Christmas Party</a>
+                        </td>
+                        <td>John Smith
+                        </td>
+                        <td>12/12/13
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#">What is your favorite color?</a>
+                        </td>
+                        <td>Jane Doe
+                        </td>
+                        <td>09/25/13
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="tab-pane" id="created">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td><strong>Name</strong>
+                        </td>
+                        <td><strong>Status</strong></td>
+                        <td><strong>Type</strong></td>
+                        <td><strong>Total Submissions</strong>
+                        </td>
+                        <td><strong>Create Date</strong>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="#">Summer Cookout</a>
+                        </td>
+                        <td>Open
+                        </td>
+                        <td>Voting</td>
+                        <td>45
+                        </td>
+                        <td>06/03/13
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#">Test1</a>
+                        </td>
+                        <td>Completed
+                        </td>
+                        <td>Survey</td>
+                        <td>23
+                        </td>
+                        <td>09/25/13
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#">Test2</a>
+                        </td>
+                        <td>Not Started
+                        </td>
+                        <td>Voting</td>
+                        <td>23
+                        </td>
+                        <td>09/25/13
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#">Test3</a>
+                        </td>
+                        <td>Open
+                        </td>
+                        <td>Survey</td>
+                        <td>23
+                        </td>
+                        <td>09/25/13
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="#">Test4</a>
+                        </td>
+                        <td>Completed
+                        </td>
+                        <td>Survey</td>
+                        <td>23
+                        </td>
+                        <td>09/25/13
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @* <div class="tab-pane" id="messages">...</div>
+    <div class="tab-pane" id="settings">...</div>*@
+</div>
+
+@*@section Scripts{
+    <script>
+        $(function () {
+            $('#myTab a:last').tab('show')
+        })
+    </script>
+}*@

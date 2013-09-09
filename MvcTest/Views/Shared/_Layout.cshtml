@@ -20,7 +20,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Project name</a>
+                    <img id="ql_logo" src="~/Images/sponsor-logo-sm.png" height="40" width="199" style="margin:5px" />
+                    @*<a class="navbar-brand" href="#">Project name</a>*@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -74,13 +75,13 @@
                 @RenderBody()
             </section>*@
     </div>
-    <footer>
+    @*<footer>
         <div class="content-wrapper">
             <div class="float-left">
                 <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
             </div>
         </div>
-    </footer>
+    </footer>*@
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)

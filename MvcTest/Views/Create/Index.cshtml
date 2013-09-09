@@ -2,4 +2,132 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+@section Styles {
+    <style type="text/css">
+        .simpleframe {
+            -webkit-box-shadow: none;
+            background-color: rgb(255, 255, 255);
+            border-color: rgb(221, 221, 221);
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            box-shadow: none;
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            display: block;
+            margin: 15px 0px 15px 0px;
+            padding: 15px;
+        }
+    </style>
+}
+
+<ul class="nav nav-tabs" id="myTab">
+    <li class="active"><a href="#new" data-toggle="tab">Create New</a></li>
+    <li><a href="#saved" data-toggle="tab">Saved</a></li>
+    @*<li><a href="#messages">Messages</a></li>
+    <li><a href="#settings">Settings</a></li>*@
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="new">
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-3">
+                    <h4>@Html.ActionLink("+ Survey", "Survey", "Create")</h4>
+                </div>
+                <div class="col-md-3  col-md-offset-2">
+                    <h4>@Html.ActionLink("+ Vote", "Survey", "Create")</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane" id="saved">
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="#" class="simpleframe">
+                        @*<div class="simpleframe">*@
+                            <h3>Lunch Vote</h3>
+                            <p>
+                                Created: 01/01/12<br />
+                                Type: Live Vote
+                            </p>
+                            <p></p>
+                        @*</div>*@
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#" class="simpleframe">
+                        @*<div class="simpleframe">*@
+                            <h3>Simple Survey</h3>
+                            <p>
+                                Created: 01/01/12<br />
+                                Type: Survey
+                            </p>
+                            <p></p>
+                        @*</div>*@
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#" class="simpleframe">
+                        @*<div class="simpleframe">*@
+                            <h3>Simple Survey</h3>
+                            <p>
+                                Created: 01/01/12<br />
+                                Type: Survey
+                            </p>
+                            <p></p>
+                        @*</div>*@
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#" class="simpleframe">
+                        @*<div class="simpleframe">*@
+                            <h3>Simple Survey With a Long Name</h3>
+                            <p>
+                                Created: 01/01/12<br />
+                                Type: Survey
+                            </p>
+                            <p></p>
+                        @*</div>*@
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="#" class="simpleframe">
+                        @*<div class="simpleframe">*@
+                            <h3>Who Runs Vote</h3>
+                            <p>
+                                Created: 01/01/12<br />
+                                Type: Live Vote
+                            </p>
+                            <p></p>
+                        @*</div>*@
+                    </a>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="#" class="simpleframe">
+                        @*<div class="simpleframe">*@
+                            <h3>Simple Survey</h3>
+                            <p>
+                                Created: 01/01/12<br />
+                                Type: Survey
+                            </p>
+                            <p></p>
+                        @*</div>*@
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
