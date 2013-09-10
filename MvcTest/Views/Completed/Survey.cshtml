@@ -1,0 +1,225 @@
+﻿@{
+    ViewBag.Title = "Survey";
+}
+
+@section Styles{
+    <style type="text/css">
+        .list-group {
+            margin-bottom: 0px;
+        }
+
+        .progress {
+            margin-bottom: 0px;
+        }
+    </style>
+}
+
+<h2>IT Survey</h2>
+<div class="well well-sm">
+    <form class="questionframe" role="form">
+        @*<div class="text-right">
+            <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+        </div>*@
+        @*<div class="questionframe">*@
+
+        <h4>What languages have you never used before?</h4>
+        <div class="checkbox">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="checkbox" disabled />Javascript
+                    </div>
+                    <div class="col-md-6">
+                        <span class="label label-danger info1">4</span>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="checkbox" disabled />C#
+                    </div>
+                    <div class="col-md-6">
+                        <span class="label label-danger info2">2</span>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="checkbox" disabled />Visual Basic
+                    </div>
+                    <div class="col-md-6">
+                        <span class="label label-danger info3">0</span>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <hr />
+
+        <h4>What is your favorite color?</h4>
+        <div class="radio">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" disabled>Green
+                    </div>
+                    <div class="col-md-6">
+                        <span class="label label-success">40 %</span>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" disabled>White
+                    </div>
+                    <div class="col-md-6">
+                        <span class="label label-warning">60 %</span>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 40%">
+                <span class="sr-only">40% Complete (success)</span>
+            </div>
+            <div class="progress-bar progress-bar-warning" style="width: 60%">
+                <span class="sr-only">60% Complete (warning)</span>
+            </div>
+        </div>
+        <hr />
+
+        <h4>How many siblings do you have?</h4>
+        <div class="radio">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="radio" name="optionsRadios" value="option1" disabled>0
+                    </div>
+                    <div class="col-md-1">
+                        <span class="label label-primary">20 %</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary" style="width: 20%">
+                                <span class="sr-only">20% Complete (success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="radio" name="optionsRadios" value="option2" disabled>1-2
+                    </div>
+                    <div class="col-md-1">
+                        <span class="label label-primary">60 %</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary" style="width: 60%">
+                                <span class="sr-only">60% Complete (success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="radio" name="optionsRadios" value="option3" disabled>3+
+                    </div>
+                    <div class="col-md-1">
+                        <span class="label label-primary">20 %</span>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary" style="width: 20%">
+                                <span class="sr-only">20% Complete (success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </label>
+        </div>
+        @*<div class="text-right">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>*@
+        @*</div>*@
+    </form>
+</div>
+
+<div id="settings-layout-content1" style="display: none">
+    <ul class="list-group">
+        <li class="list-group-item">John Smith</li>
+        <li class="list-group-item">Fred Flinstone</li>
+        <li class="list-group-item">Inspector Gadget</li>
+        <li class="list-group-item">Jane Doe</li>
+    </ul>
+</div>
+
+<div id="settings-layout-content2" style="display: none">
+    <ul class="list-group">
+        <li class="list-group-item">John Smith</li>
+        <li class="list-group-item">Fred Flinstone</li>
+    </ul>
+</div>
+
+<div id="settings-layout-content3" style="display: none">
+    No user's chose this.
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $('.info1').popover({
+            html: true,
+            placement: 'right',
+            trigger: 'manual',
+            content: function () {
+                return $('#settings-layout-content1').html();
+            }
+        }).click(function (e) {
+            $(this).popover('toggle');
+
+            e.stopPropagation();
+        });
+
+        $('.info2').popover({
+            html: true,
+            placement: 'right',
+            trigger: 'manual',
+            content: function () {
+                return $('#settings-layout-content2').html();
+            }
+        }).click(function (e) {
+            $(this).popover('toggle');
+
+            e.stopPropagation();
+        });
+
+        $('.info3').popover({
+            html: true,
+            placement: 'right',
+            trigger: 'manual',
+            content: function () {
+                return $('#settings-layout-content3').html();
+            }
+        }).click(function (e) {
+            $(this).popover('toggle');
+
+            e.stopPropagation();
+        });
+    </script>
+}

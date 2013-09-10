@@ -164,8 +164,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\navbar-fixed-top.css" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CompletedController.cs" />
     <Compile Include="Controllers\CreateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InProgressController.cs" />
     <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -303,6 +305,10 @@
     <Content Include="Views\Create\Vote.cshtml" />
     <Content Include="Views\Review\Survey.cshtml" />
     <Content Include="Views\Review\Vote.cshtml" />
+    <Content Include="Views\Completed\Survey.cshtml" />
+    <Content Include="Views\Completed\Vote.cshtml" />
+    <Content Include="Views\InProgress\Survey.cshtml" />
+    <Content Include="Views\InProgress\Vote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
