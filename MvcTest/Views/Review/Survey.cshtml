@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Survey";
+}
+
+<h2>IT Survey</h2>
+<div class="well well-sm">
+    <form class="questionframe" role="form">
+        @*<div class="text-right">
+            <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+        </div>*@
+        @*<div class="questionframe">*@
+
+        <h4>What languages have you never used before?</h4>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" />Javascript
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" />C#
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" />Visual Basic
+            </label>
+        </div>
+        <hr />
+
+        <h4>What is your favorite color?</h4>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Green
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">White
+            </label>
+        </div>
+        <hr />
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        @*</div>*@
+    </form>
+</div>

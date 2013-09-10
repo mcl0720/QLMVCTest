@@ -2,4 +2,59 @@
     ViewBag.Title = "Vote";
 }
 
-<h2>Vote</h2>
+@section Styles {
+    <style type="text/css">
+        .questionframe {
+            -webkit-box-shadow: none;
+            background-color: rgb(255, 255, 255);
+            border-color: rgb(221, 221, 221);
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            box-shadow: none;
+            box-sizing: border-box;
+            color: rgb(51, 51, 51);
+            display: block;
+            margin: 15px 0px 15px 0px;
+            padding: 15px;
+        }
+
+        .question-remove {
+            position: relative;
+            top: -28px;
+            right: -10px;
+        }
+    </style>
+}
+
+<form role="form">
+    <input type="text" class="form-control" id="surveyTitle" placeholder="Enter Vote Title" />
+</form>
+<form class="questionframe" role="form">
+    @*<div class="text-right">
+        <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+    </div>*@
+    @*<div class="questionframe">*@
+    <div class="form-group">
+        <input type="text" class="form-control" id="questionInput" placeholder="Enter question">
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+        </label>
+        <input type="text" class="form-control" placeholder="Enter option" />
+        <button type="button" class="btn btn-primary btn-sm">Remove</button>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+        </label>
+        <input type="text" class="form-control" placeholder="Enter option" />
+        <button type="button" class="btn btn-primary btn-sm">Remove</button>
+    </div>
+    <a href="#">+ Add new control</a>
+    @*</div>*@
+</form>

@@ -301,6 +301,8 @@
     <Content Include="Views\Review\Index.cshtml" />
     <Content Include="Views\Create\Survey.cshtml" />
     <Content Include="Views\Create\Vote.cshtml" />
+    <Content Include="Views\Review\Survey.cshtml" />
+    <Content Include="Views\Review\Vote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
