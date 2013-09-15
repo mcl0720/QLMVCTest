@@ -23,50 +23,212 @@
         }
 
         .question-remove {
-            position:relative;
+            position: relative;
             top: -28px;
             right: -10px;
+        }
+
+        li.test a:hover:after {
+            content: ' (drag me)';
+        }
+
+        ul.tt {
+            min-height: 300px;
+            padding: 0px;
+        }
+
+        li.over {
+            border-color: #333;
+            background: #ccc;
+        }
+
+        li.test {
+            list-style: none;
+        }
+
+            li.test a {
+                text-decoration: none;
+                color: #000;
+                margin: 10px;
+                width: 130px;
+                border: 3px dashed #999;
+                background: #eee;
+                padding: 10px;
+                display: block;
+            }
+
+        .add-indicator-bottom, .add-indicator-top {
+            height: 10px;
+            background: rgba(0, 0, 0, .5);
         }
     </style>
 }
 
-<form role="form" >
-    <input  type="text" class="form-control" id="surveyTitle" placeholder="Enter Survey Title"/>
+<form role="form">
+    <input type="text" class="form-control" id="surveyTitle" placeholder="Enter Survey Title" />
 </form>
-<form class="questionframe" role="form">
-    <div class="text-right">
-    <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+<div class="row">
+    <div class="col-md-10">
+        <div id="survey-frame" class="questionframe">
+            <div class="question-container">
+                <div class="add-indicator-top hidden"></div>
+                <div class="questionframe">
+                    <div class="text-right">
+                        <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="questionInput" placeholder="Enter question">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" />
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter option" />
+                        <button type="button" class="btn btn-primary btn-sm">Remove</button>
+                    </div>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" />
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter option" />
+                        <button type="button" class="btn btn-primary btn-sm">Remove</button>
+                    </div>
+
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" />
+                        </label>
+                        <input type="text" class="form-control" placeholder="Enter option" />
+                        <button type="button" class="btn btn-primary btn-sm">Remove</button>
+                    </div>
+                    <a href="#">+ Add new control</a>
+                </div>
+                <div class="add-indicator-bottom hidden"></div>
+            </div>
         </div>
-    @*<div class="questionframe">*@
-    <div class="form-group">
-        <input type="text" class="form-control" id="questionInput" placeholder="Enter question">
     </div>
-    <div class="checkbox">
-        <label>
-            <input type="checkbox"/>
-        </label>
-        <input type="text" class="form-control" placeholder="Enter option" />
-        <button type="button" class="btn btn-primary btn-sm">Remove</button>
+    <div class="col-md-2">
+        <ul class="tt">
+            <li class="test"><a id="one" href="#">one</a></li>
+            <li class="test"><a href="#" id="two">two</a></li>
+            <li class="test"><a href="#" id="three">three</a></li>
+            <li class="test"><a href="#" id="four">four</a></li>
+            <li class="test"><a href="#" id="five">five</a></li>
+        </ul>
     </div>
+</div>
+<div class="text-right" style="margin-bottom: 15px">
+    <a href="#">+ Add new question</a>
+</div>
 
-    <div class="checkbox">
-        <label>
-            <input type="checkbox"/>
-        </label>
-        <input type="text" class="form-control" placeholder="Enter option" />
-        <button type="button" class="btn btn-primary btn-sm">Remove</button>
-    </div>
+@section Scripts {
+    <script type="text/javascript">
+        var links = $("li.test"), el = null;
+        for (var i = 0; i < links.length; i++) {
+            el = links[i];
 
-    <div class="checkbox">
-        <label>
-            <input type="checkbox"/>
-        </label>
-        <input type="text" class="form-control" placeholder="Enter option" />
-        <button type="button" class="btn btn-primary btn-sm">Remove</button>
-    </div>
-    <a href="#">+ Add new control</a>
-    @*</div>*@
-</form>
-<div class="text-right" style="margin-bottom:15px">
-<a href="#" >+ Add new question</a>
-    </div>
+            el.setAttribute('draggable', 'true');
+
+            addEvent(el, 'dragstart', function (e) {
+                e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
+                e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
+            });
+        }
+
+        var question = $(".question-container");
+
+        var bin = document.querySelector('#survey-frame');
+
+        var insertQuestion = null;
+        var insertPos = "";
+
+        addEvent(bin, 'dragover', function (e) {
+            if (e.preventDefault) e.preventDefault(); // allows us to drop
+
+            var mouseX = e.clientX, mouseY = e.clientY, elementMouseIsOver = document.elementFromPoint(mouseX, mouseY);
+
+            $(".question-container").each(function (index) {
+                if (jQuery.contains(this, elementMouseIsOver)) {
+                    var currentQuestion = $(this);
+                    //console.log(this);
+
+                    var offset = $(this).offset();
+
+                    var relY = e.pageY - offset.top;
+
+                    var bottom = jQuery(this).find("div.add-indicator-bottom");
+                    var top = jQuery(this).find("div.add-indicator-top");
+
+                    if (relY > $(this).height() / 2) {
+                        
+                        bottom.removeClass("hidden");
+                        top.addClass("hidden");
+
+                        insertQuestion = $(this);
+                        insertPos = "bottom";
+                        //if (bottom.hasClass("hidden"))
+                        //    console.log("bottom hidden");
+                        //    bottom.removeClass("hidden");
+                    }
+                    else {
+                        
+                        top.removeClass("hidden");
+                        bottom.addClass("hidden");
+
+                        insertQuestion = $(this);
+                        insertPos = "top";
+                        //if (top.hasClass("hidden"))
+                        //    top.removeClass("hidden");
+                    }
+                }
+            });
+
+            //this.className = 'over';
+            //console.log(jQuery(this).find("div.add-indicator"));
+            //jQuery(this).find("div.add-indicator").removeClass("hidden");
+            e.dataTransfer.dropEffect = 'copy';
+            return false;
+        });
+
+        addEvent(bin, 'dragleave', function (e) {
+            var elementMouseIsOver = document.elementFromPoint(e.clientX, e.clientY);
+
+            if (!jQuery.contains(bin, elementMouseIsOver)) {
+                jQuery(this).find("div.add-indicator-bottom").addClass("hidden");
+                jQuery(this).find("div.add-indicator-top").addClass("hidden");
+
+                insertQuestion = null;
+                insertPos = "";
+            }
+        });
+
+        // to get IE to work
+        addEvent(bin, 'dragenter', function (e) {
+            //this.className = 'over';
+            return false;
+        });
+
+        addEvent(bin, 'drop', function (e) {
+            if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
+
+            //console.log(insertQuestion);
+            //console.log(insertPos);
+
+            if (insertQuestion != null && insertPos != "") {
+                insertQuestion.find("div.add-indicator-bottom").addClass("hidden");
+                insertQuestion.find("div.add-indicator-top").addClass("hidden");
+
+                //console.log(question);
+                if (insertPos == "bottom") {
+                    console.log("bottom insert");
+                    question.clone().insertAfter(insertQuestion);
+                }
+                else if (insertPos == "top") {
+                    console.log("top insert");
+                    question.clone().insertBefore(insertQuestion);
+                }
+            }
+        });
+    </script>
+}
