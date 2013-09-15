@@ -57,7 +57,7 @@
                 display: block;
             }
 
-        .add-indicator-bottom, .add-indicator-top {
+        .add-indicator-bottom, .add-indicator-top, .add-indicator-first {
             height: 10px;
             background: rgba(0, 0, 0, .5);
         }
@@ -70,42 +70,7 @@
 <div class="row">
     <div class="col-md-10">
         <div id="survey-frame" class="questionframe">
-            <div class="question-container">
-                <div class="add-indicator-top hidden"></div>
-                <div class="questionframe">
-                    <div class="text-right">
-                        <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="questionInput" placeholder="Enter question">
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" />
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter option" />
-                        <button type="button" class="btn btn-primary btn-sm">Remove</button>
-                    </div>
-
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" />
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter option" />
-                        <button type="button" class="btn btn-primary btn-sm">Remove</button>
-                    </div>
-
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" />
-                        </label>
-                        <input type="text" class="form-control" placeholder="Enter option" />
-                        <button type="button" class="btn btn-primary btn-sm">Remove</button>
-                    </div>
-                    <a href="#">+ Add new control</a>
-                </div>
-                <div class="add-indicator-bottom hidden"></div>
-            </div>
+            <div class="add-indicator-first hidden"></div>
         </div>
     </div>
     <div class="col-md-2">
@@ -122,6 +87,27 @@
     <a href="#">+ Add new question</a>
 </div>
 
+<div class="question-container hidden">
+    <div class="add-indicator-top hidden"></div>
+    <div class="questionframe">
+        <div class="text-right">
+            <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="questionInput" placeholder="Enter question">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" />
+            </label>
+            <input type="text" class="form-control" placeholder="Enter option" />
+            <button type="button" class="btn btn-primary btn-sm">Remove</button>
+        </div>
+        <a href="#">+ Add new control</a>
+    </div>
+    <div class="add-indicator-bottom hidden"></div>
+</div>
+
 @section Scripts {
     <script type="text/javascript">
         var links = $("li.test"), el = null;
@@ -136,53 +122,66 @@
             });
         }
 
+        // Removal of a question
+        $("#survey-frame").on("click", ".question-remove", function () {
+            $(this).parents(".question-container").remove();
+        });
+
         var question = $(".question-container");
 
-        var bin = document.querySelector('#survey-frame');
+        var surveyFrame = document.querySelector('#survey-frame');
 
         var insertQuestion = null;
         var insertPos = "";
+        var addFirst = false;
 
-        addEvent(bin, 'dragover', function (e) {
+        addEvent(surveyFrame, 'dragover', function (e) {
             if (e.preventDefault) e.preventDefault(); // allows us to drop
 
             var mouseX = e.clientX, mouseY = e.clientY, elementMouseIsOver = document.elementFromPoint(mouseX, mouseY);
 
-            $(".question-container").each(function (index) {
-                if (jQuery.contains(this, elementMouseIsOver)) {
-                    var currentQuestion = $(this);
-                    //console.log(this);
+            // Handle adding a question to a blank survey
+            if ($("#survey-frame").find(".question-container:visible").length <= 0) {
+                addFirst = true;
+                $(".add-indicator-first").removeClass("hidden");
+            }
+            else {
+                $(".question-container").each(function (index) {
+                    if (jQuery.contains(this, elementMouseIsOver)) {
+                        var currentQuestion = $(this);
+                        //console.log(this);
 
-                    var offset = $(this).offset();
+                        var offset = $(this).offset();
 
-                    var relY = e.pageY - offset.top;
+                        var relY = e.pageY - offset.top;
 
-                    var bottom = jQuery(this).find("div.add-indicator-bottom");
-                    var top = jQuery(this).find("div.add-indicator-top");
+                        var bottom = jQuery(this).find("div.add-indicator-bottom");
+                        var top = jQuery(this).find("div.add-indicator-top");
 
-                    if (relY > $(this).height() / 2) {
-                        
-                        bottom.removeClass("hidden");
-                        top.addClass("hidden");
+                        if (relY > $(this).height() / 2) {
 
-                        insertQuestion = $(this);
-                        insertPos = "bottom";
-                        //if (bottom.hasClass("hidden"))
-                        //    console.log("bottom hidden");
-                        //    bottom.removeClass("hidden");
+                            bottom.removeClass("hidden");
+                            top.addClass("hidden");
+
+                            insertQuestion = $(this);
+                            insertPos = "bottom";
+                            //if (bottom.hasClass("hidden"))
+                            //    console.log("bottom hidden");
+                            //    bottom.removeClass("hidden");
+                        }
+                        else {
+
+                            top.removeClass("hidden");
+                            bottom.addClass("hidden");
+
+                            insertQuestion = $(this);
+                            insertPos = "top";
+                            //if (top.hasClass("hidden"))
+                            //    top.removeClass("hidden");
+                        }
                     }
-                    else {
-                        
-                        top.removeClass("hidden");
-                        bottom.addClass("hidden");
-
-                        insertQuestion = $(this);
-                        insertPos = "top";
-                        //if (top.hasClass("hidden"))
-                        //    top.removeClass("hidden");
-                    }
-                }
-            });
+                });
+            }
 
             //this.className = 'over';
             //console.log(jQuery(this).find("div.add-indicator"));
@@ -191,42 +190,55 @@
             return false;
         });
 
-        addEvent(bin, 'dragleave', function (e) {
+        addEvent(surveyFrame, 'dragleave', function (e) {
             var elementMouseIsOver = document.elementFromPoint(e.clientX, e.clientY);
 
-            if (!jQuery.contains(bin, elementMouseIsOver)) {
+            if (!jQuery.contains(surveyFrame, elementMouseIsOver)) {
                 jQuery(this).find("div.add-indicator-bottom").addClass("hidden");
                 jQuery(this).find("div.add-indicator-top").addClass("hidden");
+                $(".add-indicator-first").addClass("hidden");
 
                 insertQuestion = null;
                 insertPos = "";
+                addFirst = false;
             }
         });
 
         // to get IE to work
-        addEvent(bin, 'dragenter', function (e) {
+        addEvent(surveyFrame, 'dragenter', function (e) {
             //this.className = 'over';
             return false;
         });
 
-        addEvent(bin, 'drop', function (e) {
+        addEvent(surveyFrame, 'drop', function (e) {
             if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
 
             //console.log(insertQuestion);
             //console.log(insertPos);
+            console.log(addFirst);
+            if (addFirst) {
+                var firstIndicator = $(".add-indicator-first");
+                firstIndicator.addClass("hidden");
+                addFirst = false;
+                //console.log("addfirst");
 
-            if (insertQuestion != null && insertPos != "") {
-                insertQuestion.find("div.add-indicator-bottom").addClass("hidden");
-                insertQuestion.find("div.add-indicator-top").addClass("hidden");
+                question.clone().removeClass("hidden").insertAfter(firstIndicator);
+            }
+            else {
 
-                //console.log(question);
-                if (insertPos == "bottom") {
-                    console.log("bottom insert");
-                    question.clone().insertAfter(insertQuestion);
-                }
-                else if (insertPos == "top") {
-                    console.log("top insert");
-                    question.clone().insertBefore(insertQuestion);
+                if (insertQuestion != null && insertPos != "") {
+                    insertQuestion.find("div.add-indicator-bottom").addClass("hidden");
+                    insertQuestion.find("div.add-indicator-top").addClass("hidden");
+
+                    //console.log(question);
+                    if (insertPos == "bottom") {
+                        console.log("bottom insert");
+                        question.clone().removeClass("hidden").insertAfter(insertQuestion);
+                    }
+                    else if (insertPos == "top") {
+                        console.log("top insert");
+                        question.clone().removeClass("hidden").insertBefore(insertQuestion);
+                    }
                 }
             }
         });
