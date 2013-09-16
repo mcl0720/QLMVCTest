@@ -167,7 +167,7 @@
                         if (relY > $(this).height() / 2) {
 
                             bottom.removeClass("hidden");
-                            top.addClass("hidden");
+                            $("div.add-indicator-top").addClass("hidden");
 
                             insertQuestion = $(this);
                             insertPos = "bottom";
@@ -175,7 +175,7 @@
                         else {
 
                             top.removeClass("hidden");
-                            bottom.addClass("hidden");
+                            $("div.add-indicator-bottom").addClass("hidden");
 
                             insertQuestion = $(this);
                             insertPos = "top";
