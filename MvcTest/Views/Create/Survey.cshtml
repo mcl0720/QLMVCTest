@@ -80,9 +80,9 @@
         </ul>
     </div>
 </div>
-<div class="text-right" style="margin-bottom: 15px">
+@*<div class="text-right" style="margin-bottom: 15px">
     <a href="#">+ Add new question</a>
-</div>
+</div>*@
 
 @section Scripts {
     <script type="text/javascript">
@@ -112,6 +112,37 @@
         var addFirst = false;
 
         addEvent(surveyFrame, 'dragover', function (e) {
+
+            dragQuestion(e);
+
+            return false;
+        });
+
+        addEvent(surveyFrame, 'dragleave', function (e) {
+            var elementMouseIsOver = document.elementFromPoint(e.clientX, e.clientY);
+
+            if (!jQuery.contains(surveyFrame, elementMouseIsOver)) {
+                jQuery(this).find("div.add-indicator-bottom").addClass("hidden");
+                jQuery(this).find("div.add-indicator-top").addClass("hidden");
+                $(".add-indicator-first").addClass("hidden");
+
+                insertQuestion = null;
+                insertPos = "";
+                addFirst = false;
+            }
+        });
+
+        // to get IE to work
+        addEvent(surveyFrame, 'dragenter', function (e) {
+            //this.className = 'over';
+
+            dragQuestion(e);
+
+            return false;
+        });
+
+        // Our dragging functionality
+        function dragQuestion(e) {
             if (e.preventDefault) e.preventDefault(); // allows us to drop
 
             var mouseX = e.clientX, mouseY = e.clientY, elementMouseIsOver = document.elementFromPoint(mouseX, mouseY);
@@ -157,28 +188,7 @@
             //console.log(jQuery(this).find("div.add-indicator"));
             //jQuery(this).find("div.add-indicator").removeClass("hidden");
             e.dataTransfer.dropEffect = 'copy';
-            return false;
-        });
-
-        addEvent(surveyFrame, 'dragleave', function (e) {
-            var elementMouseIsOver = document.elementFromPoint(e.clientX, e.clientY);
-
-            if (!jQuery.contains(surveyFrame, elementMouseIsOver)) {
-                jQuery(this).find("div.add-indicator-bottom").addClass("hidden");
-                jQuery(this).find("div.add-indicator-top").addClass("hidden");
-                $(".add-indicator-first").addClass("hidden");
-
-                insertQuestion = null;
-                insertPos = "";
-                addFirst = false;
-            }
-        });
-
-        // to get IE to work
-        addEvent(surveyFrame, 'dragenter', function (e) {
-            //this.className = 'over';
-            return false;
-        });
+        }
 
         var questionHtml = null;
 
@@ -205,8 +215,8 @@
                     else {
 
                         if (insertQuestion != null && insertPos != "") {
-                            insertQuestion.find("div.add-indicator-bottom").addClass("hidden");
-                            insertQuestion.find("div.add-indicator-top").addClass("hidden");
+                            $("div.add-indicator-bottom").addClass("hidden");
+                            $("div.add-indicator-top").addClass("hidden");
 
                             //console.log(question);
                             if (insertPos == "bottom") {
