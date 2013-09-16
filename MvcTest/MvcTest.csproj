@@ -310,6 +310,8 @@
     <Content Include="Views\Completed\Vote.cshtml" />
     <Content Include="Views\InProgress\Survey.cshtml" />
     <Content Include="Views\InProgress\Vote.cshtml" />
+    <Content Include="Views\Create\SurveyMultiResponse.cshtml" />
+    <Content Include="Views\Create\SurveySingleResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
