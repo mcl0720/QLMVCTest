@@ -1,5 +1,5 @@
-﻿function Question(id) {
-    this.id = id;
+﻿function Question(jqQuestion) {
+    this.jqQuestion = jqQuestion;
 }
 
 Question.prototype.addResponse = function () {
