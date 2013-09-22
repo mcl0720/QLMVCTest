@@ -13,6 +13,10 @@ namespace MvcTest
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/h5utils.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/survey/create").Include(
+                        "~/Scripts/Classes/question.js",
+                        "~/Scripts/Classes/survey.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 

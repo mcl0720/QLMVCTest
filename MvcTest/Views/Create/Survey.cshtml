@@ -87,8 +87,19 @@
     <a href="#">+ Add new question</a>
 </div>*@
 
+@Scripts.Render("~/bundles/survey/create")
+
 @section Scripts {
     <script type="text/javascript">
+        var SurveyObject = null;
+
+        $(document).ready(function () {
+            SurveyObject = new Survey($("#survey-frame"), null);
+
+            console.log(SurveyObject);
+        });
+        
+
         var links = document.querySelectorAll('li.test > a'), el = null;
         for (var i = 0; i < links.length; i++) {
             el = links[i];
@@ -137,7 +148,6 @@
 
         // to get IE to work
         addEvent(surveyFrame, 'dragenter', function (e) {
-            //this.className = 'over';
 
             dragQuestion(e);
 
@@ -213,7 +223,11 @@
                         //console.log("addfirst");
 
                         //question.clone().removeClass("hidden").insertAfter(firstIndicator);
-                        questionHtml.clone().insertAfter(firstIndicator);
+                        var q = questionHtml.clone();
+                        q.insertBefore(firstIndicator);
+
+                        SurveyObject.addQuestion(q, 0);
+                        console.log(SurveyObject);
                     }
                     else {
 
@@ -225,12 +239,31 @@
                             if (insertPos == "bottom") {
                                 //console.log("bottom insert");
                                 //question.clone().removeClass("hidden").insertAfter(insertQuestion);
-                                questionHtml.clone().insertAfter(insertQuestion);
+                                //questionHtml.clone().insertAfter(insertQuestion);
+
+                                var q = questionHtml.clone();
+                                q.insertAfter(insertQuestion);
+
+                                SurveyObject.addQuestion(q, insertQuestion.index()+1);
+                                console.log(SurveyObject);
                             }
                             else if (insertPos == "top") {
                                 //console.log("top insert");
                                 //question.clone().removeClass("hidden").insertBefore(insertQuestion);
-                                questionHtml.clone().insertBefore(insertQuestion);
+                                //questionHtml.clone().insertBefore(insertQuestion);
+
+                                var q = questionHtml.clone();
+                                q.insertBefore(insertQuestion);
+
+                                var questionIndex = insertQuestion.index();
+                                if (questionIndex == 0) {
+                                    SurveyObject.addQuestion(q, 0);
+                                    console.log(SurveyObject);
+                                }
+                                else {
+                                    SurveyObject.addQuestion(q, insertQuestion.index() - 1);
+                                    console.log(SurveyObject);
+                                }
                             }
                         }
                     }
