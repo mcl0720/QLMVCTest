@@ -1,7 +1,12 @@
 ﻿var Question = function (jqQuestion) {
     this.jqQuestion = jqQuestion;
+    this.controls = [];
 };
 
-Question.prototype.addResponse = function () {
+Question.prototype.addControl = function () {
 
+};
+
+Question.prototype.remove = function () {
+    this.jqQuestion.remove();
 };

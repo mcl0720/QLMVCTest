@@ -4,13 +4,29 @@
     this.jqHiddenMarkup = jqHiddenMarkup;
 };
 
-Survey.prototype.addQuestion = function (jqQ, index) {
-    var question = new Question(jqQ);
-    this.questions.splice(index, 0, question);
+Survey.prototype.addQuestion = function (qType, index) {
+    var Survey = this;
+
+    $.get(qType, function (data) {
+        questionJQ = $(data);
+
+        var question = new Question(questionJQ, qType);
+        if (index === 0) {
+            Survey.jqSurvey.prepend(questionJQ);
+        }
+        else {
+            Survey.questions[index-1].jqQuestion.after(questionJQ);
+        }
+
+        Survey.questions.splice(index, 0, question);
+        console.log(Survey);
+    });
 };
 
-Survey.prototype.removeQuestion = function () {
-
+Survey.prototype.removeQuestion = function (index) {
+    this.questions[index].remove();
+    this.questions.splice(index, 1);
+    console.log(this);
 };
 
 Survey.prototype.moveQuestion = function (direction) {
@@ -19,4 +35,8 @@ Survey.prototype.moveQuestion = function (direction) {
 
 Survey.prototype.getControl = function () {
 
+};
+
+Survey.prototype.questionNum = function () {
+    return this.questions.length;
 };

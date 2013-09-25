@@ -80,25 +80,20 @@
         </ul>
     </div>
 </div>
-<div id="hiddenMarkup" class="hidden">
-
+<div id="hidden-markup" class="hidden">
+    @Html.Partial("SurveyResponseControls/AllSurveyResponseControls")
 </div>
-@*<div class="text-right" style="margin-bottom: 15px">
-    <a href="#">+ Add new question</a>
-</div>*@
 
-@Scripts.Render("~/bundles/survey/create")
+@Scripts.Render("~/bundles/create/survey")
 
 @section Scripts {
     <script type="text/javascript">
         var SurveyObject = null;
 
         $(document).ready(function () {
-            SurveyObject = new Survey($("#survey-frame"), null);
-
-            console.log(SurveyObject);
+            SurveyObject = new Survey($("#survey-frame"), $("#hidden-markup"));
         });
-        
+
 
         var links = document.querySelectorAll('li.test > a'), el = null;
         for (var i = 0; i < links.length; i++) {
@@ -113,22 +108,18 @@
         }
 
         // Removal of a question
-        $("#survey-frame").on("click", ".question-remove", function () {
-            $(this).parents(".question-container").remove();
+        $("#survey-frame").on("click", ".question-remove", function (e) {
+            e.preventDefault(); // stop the page from scrolling because of link click
+            SurveyObject.removeQuestion($(this).parents(".question-container").index());
         });
 
         var question = $(".question-container");
-
         var surveyFrame = document.querySelector('#survey-frame');
-
         var insertQuestion = null;
         var insertPos = "";
-        var addFirst = false;
 
         addEvent(surveyFrame, 'dragover', function (e) {
-
             dragQuestion(e);
-
             return false;
         });
 
@@ -142,15 +133,12 @@
 
                 insertQuestion = null;
                 insertPos = "";
-                addFirst = false;
             }
         });
 
         // to get IE to work
         addEvent(surveyFrame, 'dragenter', function (e) {
-
             dragQuestion(e);
-
             return false;
         });
 
@@ -162,23 +150,19 @@
 
             // Handle adding a question to a blank survey
             if ($("#survey-frame").find(".question-container:visible").length <= 0) {
-                addFirst = true;
                 $(".add-indicator-first").removeClass("hidden");
             }
             else {
                 $(".question-container").each(function (index) {
                     if (jQuery.contains(this, elementMouseIsOver)) {
                         var currentQuestion = $(this);
-
                         var offset = $(this).offset();
-
                         var relY = e.pageY - offset.top;
 
                         var bottom = jQuery(this).find("div.add-indicator-bottom");
                         var top = jQuery(this).find("div.add-indicator-top");
 
                         if (relY > $(this).height() / 2) {
-
                             bottom.removeClass("hidden");
                             $("div.add-indicator-top").addClass("hidden");
 
@@ -186,7 +170,6 @@
                             insertPos = "bottom";
                         }
                         else {
-
                             top.removeClass("hidden");
                             $("div.add-indicator-bottom").addClass("hidden");
 
@@ -196,10 +179,6 @@
                     }
                 });
             }
-
-            //this.className = 'over';
-            //console.log(jQuery(this).find("div.add-indicator"));
-            //jQuery(this).find("div.add-indicator").removeClass("hidden");
             e.dataTransfer.dropEffect = 'copy';
         }
 
@@ -209,65 +188,36 @@
 
         addEvent(surveyFrame, 'drop', function (e) {
             if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
+            var numQuestions = SurveyObject.questionNum();
 
-            console.log(e.dataTransfer.getData('Text'));
+            if (numQuestions == 0 || (insertQuestion != null && insertPos != "")) {
+                var insertIndex = -1;
 
-            if (addFirst || (insertQuestion != null && insertPos != "")) {
-                $.get(e.dataTransfer.getData('Text'), function (data) {
-                    questionHtml = $(data);
+                // We are adding the first question
+                if (numQuestions == 0) {
+                    $(".add-indicator-first").addClass("hidden");
+                    insertIndex = 0;
+                }
+                else {
 
-                    if (addFirst) {
-                        var firstIndicator = $(".add-indicator-first");
-                        firstIndicator.addClass("hidden");
-                        addFirst = false;
-                        //console.log("addfirst");
+                    if (insertQuestion != null && insertPos != "") {
+                        $("div.add-indicator-bottom").addClass("hidden");
+                        $("div.add-indicator-top").addClass("hidden");
 
-                        //question.clone().removeClass("hidden").insertAfter(firstIndicator);
-                        var q = questionHtml.clone();
-                        q.insertBefore(firstIndicator);
-
-                        SurveyObject.addQuestion(q, 0);
-                        console.log(SurveyObject);
-                    }
-                    else {
-
-                        if (insertQuestion != null && insertPos != "") {
-                            $("div.add-indicator-bottom").addClass("hidden");
-                            $("div.add-indicator-top").addClass("hidden");
-
-                            //console.log(question);
-                            if (insertPos == "bottom") {
-                                //console.log("bottom insert");
-                                //question.clone().removeClass("hidden").insertAfter(insertQuestion);
-                                //questionHtml.clone().insertAfter(insertQuestion);
-
-                                var q = questionHtml.clone();
-                                q.insertAfter(insertQuestion);
-
-                                SurveyObject.addQuestion(q, insertQuestion.index()+1);
-                                console.log(SurveyObject);
+                        if (insertPos == "bottom") {
+                            insertIndex = insertQuestion.index() + 1;
+                        }
+                        else if (insertPos == "top") {
+                            if (insertQuestion.index() == 0) {
+                                insertIndex = 0;
                             }
-                            else if (insertPos == "top") {
-                                //console.log("top insert");
-                                //question.clone().removeClass("hidden").insertBefore(insertQuestion);
-                                //questionHtml.clone().insertBefore(insertQuestion);
-
-                                var q = questionHtml.clone();
-                                q.insertBefore(insertQuestion);
-
-                                var questionIndex = insertQuestion.index();
-                                if (questionIndex == 0) {
-                                    SurveyObject.addQuestion(q, 0);
-                                    console.log(SurveyObject);
-                                }
-                                else {
-                                    SurveyObject.addQuestion(q, insertQuestion.index() - 1);
-                                    console.log(SurveyObject);
-                                }
+                            else {
+                                insertIndex = insertQuestion.index();
                             }
                         }
                     }
-                });
+                }
+                SurveyObject.addQuestion(e.dataTransfer.getData('Text'), insertIndex);
             }
         });
     </script>
