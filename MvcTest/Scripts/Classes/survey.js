@@ -33,8 +33,10 @@ Survey.prototype.moveQuestion = function (direction) {
 
 };
 
-Survey.prototype.getControl = function () {
-
+Survey.prototype.addResponse = function (qIndex, responseType) {
+    var jqResponse = $("#hidden-markup > ." + responseType).clone();
+    var response = new Response(jqResponse, responseType);
+    this.questions[qIndex].addResponse(response);
 };
 
 Survey.prototype.questionNum = function () {

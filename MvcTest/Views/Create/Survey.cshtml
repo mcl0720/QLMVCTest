@@ -162,18 +162,15 @@
                         var bottom = jQuery(this).find("div.add-indicator-bottom");
                         var top = jQuery(this).find("div.add-indicator-top");
 
+                        insertQuestion = $(this);
                         if (relY > $(this).height() / 2) {
                             bottom.removeClass("hidden");
                             $("div.add-indicator-top").addClass("hidden");
-
-                            insertQuestion = $(this);
                             insertPos = "bottom";
                         }
                         else {
                             top.removeClass("hidden");
                             $("div.add-indicator-bottom").addClass("hidden");
-
-                            insertQuestion = $(this);
                             insertPos = "top";
                         }
                     }
@@ -220,5 +217,27 @@
                 SurveyObject.addQuestion(e.dataTransfer.getData('Text'), insertIndex);
             }
         });
+
+        // Catch event to add responses
+        $("#survey-frame").on("click", ".add-response", function (e) {
+            e.preventDefault(); // stop the page from scrolling because of link click
+
+            var addControl = $(this);
+            var responseType = addControl.attr("data-response-type");
+            
+            //var jqResponse = SurveyObject.getResponse(responseType);
+            SurveyObject.addResponse(addControl.parents(".question-container").index(), responseType);
+        });
+
+        $("#survey-frame").on("click", ".single-response-radio-remove", function (e) {
+            e.preventDefault(); // stop the page from scrolling because of link click
+
+            //var addControl = $(this);
+            //var responseType = addControl.attr("data-response-type");
+
+            //var jqResponse = SurveyObject.getResponse(responseType);
+            SurveyObject.questions[$(this).parents(".question-container").index()].removeResponse($(this).parent().index());
+        });
+
     </script>
 }
