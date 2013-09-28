@@ -162,9 +162,15 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\Classes\question.js" />
     <Content Include="Scripts\Classes\response.js" />
     <Content Include="Scripts\Classes\survey.js" />
+    <Content Include="Scripts\backbone.min.js" />
+    <Content Include="Scripts\BackboneClasses\question.js" />
+    <Content Include="Scripts\BackboneClasses\response.js" />
+    <Content Include="Scripts\BackboneClasses\survey.js" />
+    <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\h5utils.js" />
     <Content Include="Content\navbar-fixed-top.css" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -264,6 +270,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\underscore.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
