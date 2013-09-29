@@ -86,31 +86,44 @@
             display: block;
             width: 40px;
         }
+        
+        #page-wrap {
+        position: relative;
+        
+        }
+
+        .controls {
+           position: fixed;
+           margin-left: 975px;
+        }
+
     </style>
 }
-
-<form role="form">
-    <input type="text" class="form-control" id="surveyTitle" placeholder="Enter Survey Title" />
-</form>
-<div class="row">
-    <div class="col-md-10">
-        <div id="survey-frame" class="surveyframe">
-            <div class="add-indicator-first hidden"></div>
+<div id="page-wrap">
+    <form role="form">
+        <input type="text" class="form-control" id="surveyTitle" placeholder="Enter Survey Title" />
+    </form>
+    <div class="row">
+        <div class="col-md-10">
+            <div id="survey-frame" class="surveyframe">
+                <div class="add-indicator-first hidden"></div>
+            </div>
+        </div>
+        <div class="controls">
+            <ul class="tt">
+                <li class="test"><a id="SurveyMultiOption" href="#">one</a></li>
+                <li class="test"><a href="#" id="SurveySingleOption">two</a></li>
+                <li class="test"><a href="#" id="three">three</a></li>
+                <li class="test"><a href="#" id="four">four</a></li>
+                <li class="test"><a href="#" id="five">five</a></li>
+            </ul>
         </div>
     </div>
-    <div class="col-md-2">
-        <ul class="tt">
-            <li class="test"><a id="SurveyMultiOption" href="#">one</a></li>
-            <li class="test"><a href="#" id="SurveySingleOption">two</a></li>
-            <li class="test"><a href="#" id="three">three</a></li>
-            <li class="test"><a href="#" id="four">four</a></li>
-            <li class="test"><a href="#" id="five">five</a></li>
-        </ul>
-    </div>
-</div>
 <div id="hidden-markup" class="hidden">
     @Html.Partial("SurveyOptionControls/AllSurveyOptionControls")
 </div>
+
+ </div>
 @*<div class="question-position-popover" style="display: none">
     Hello World!
 </div>*@
@@ -122,7 +135,26 @@
         var SurveyObject = null;
 
         $(document).ready(function () {
+
             SurveyObject = new Survey($("#survey-frame"), $("#hidden-markup"));
+
+            //parseFloat strips out px so just get the number
+            var top = $('.controls').offset().top;
+
+            $(window).scroll(function () {
+                var y = $(window).scrollTop();
+
+                //what is the y position of the scroll
+                //if scroll exceeds top add id
+                if (y >= top) {
+                    // $('.col-md-2').attr('id', 'controls');
+                    $('.controls').addClass('affix');
+                }
+                else {//otherwise remove it
+                    //$('.col-md-2').removeAttr('id');
+                    $('.controls').removeClass('affix');
+                }
+            });
         });
 
 
