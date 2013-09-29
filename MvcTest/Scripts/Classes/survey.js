@@ -96,3 +96,7 @@ Survey.prototype.addOption = function (qIndex, optionType) {
 Survey.prototype.questionNum = function () {
     return this.questions.length;
 };
+
+Survey.prototype.getJSON = function () {
+    return JSON.stringify(this.questions);
+};

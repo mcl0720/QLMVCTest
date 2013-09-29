@@ -89,6 +89,7 @@
     </style>
 }
 
+<button id="survey-save" type="button" class="btn btn-default">Save</button>
 <form role="form">
     <input type="text" class="form-control" id="surveyTitle" placeholder="Enter Survey Title" />
 </form>
@@ -123,6 +124,10 @@
 
         $(document).ready(function () {
             SurveyObject = new Survey($("#survey-frame"), $("#hidden-markup"));
+
+            $("#survey-save").click(function () {
+                console.log(SurveyObject.getJSON());
+            });
         });
 
 
@@ -310,6 +315,7 @@
         //        }
         //    }).popover("toggle");
         //});
+
 
     </script>
 }

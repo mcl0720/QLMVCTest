@@ -3,6 +3,7 @@
     this.options = [];
     this.jqOptionSection = jqQuestion.find(".option-container");
     this.type = type;
+    this.id = -1;
 };
 
 Question.prototype.addOption = function (option) {
