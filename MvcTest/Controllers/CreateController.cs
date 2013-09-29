@@ -26,12 +26,12 @@ namespace MvcTest.Controllers
             return View();
         }
 
-        public ActionResult SurveyMultiResponse()
+        public ActionResult SurveyMultiOption()
         {
             return PartialView();
         }
 
-        public ActionResult SurveySingleResponse()
+        public ActionResult SurveySingleOption()
         {
             return PartialView();
         }

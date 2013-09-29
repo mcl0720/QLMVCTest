@@ -163,7 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Scripts\Classes\question.js" />
-    <Content Include="Scripts\Classes\response.js" />
+    <Content Include="Scripts\Classes\option.js" />
     <Content Include="Scripts\Classes\survey.js" />
     <Content Include="Scripts\h5utils.js" />
     <Content Include="Content\navbar-fixed-top.css" />
@@ -313,11 +313,12 @@
     <Content Include="Views\Completed\Vote.cshtml" />
     <Content Include="Views\InProgress\Survey.cshtml" />
     <Content Include="Views\InProgress\Vote.cshtml" />
-    <Content Include="Views\Create\SurveyMultiResponse.cshtml" />
-    <Content Include="Views\Create\SurveySingleResponse.cshtml" />
-    <Content Include="Views\Create\SurveyResponseControls\AllSurveyResponseControls.cshtml" />
-    <Content Include="Views\Create\SurveyResponseControls\MultiResponse.cshtml" />
-    <Content Include="Views\Create\SurveyResponseControls\SingleResponse.cshtml" />
+    <Content Include="Views\Create\SurveyMultiOption.cshtml" />
+    <Content Include="Views\Create\SurveySingleOption.cshtml" />
+    <Content Include="Views\Create\SurveyOptionControls\AllSurveyOptionControls.cshtml" />
+    <Content Include="Views\Create\SurveyOptionControls\MultiOption.cshtml" />
+    <Content Include="Views\Create\SurveyOptionControls\SingleOption.cshtml" />
+    <Content Include="Views\Create\SurveyOptionControls\QuestionControls.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,23 +1,18 @@
 ﻿<div class="question-container">
     <div class="add-indicator-top hidden"></div>
     <div class="questionframe">
-        <div class="text-right">
-            <a href="#"><span class="glyphicon glyphicon-remove-circle question-remove"></span></a>
-        </div>
+        @Html.Partial("~/Views/Create/SurveyOptionControls/QuestionControls.cshtml")
         <div class="form-group">
             <input type="text" class="form-control" placeholder="Enter question">
         </div>
-        <div class="response-container">
-
-        </div>
-        @*<div class="radio">
+        <div class="checkbox">
             <label>
-                <input type="radio" />
+                <input type="checkbox" />
             </label>
             <input type="text" class="form-control" placeholder="Enter option" />
             <button type="button" class="btn btn-primary btn-sm">Remove</button>
-        </div>*@
-        <a class="add-response" data-response-type="single-response-radio" href="#">+ Add new control</a>
+        </div>
+        <a href="#">+ Add new control</a>
     </div>
     <div class="add-indicator-bottom hidden"></div>
 </div>

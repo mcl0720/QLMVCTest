@@ -1,20 +1,27 @@
 ﻿var Question = function (jqQuestion, type) {
     this.jqQuestion = jqQuestion;
-    this.responses = [];
-    this.jqResponseSection = jqQuestion.find(".response-container");
+    this.options = [];
+    this.jqOptionSection = jqQuestion.find(".option-container");
     this.type = type;
 };
 
-Question.prototype.addResponse = function (response) {
-    this.responses.push(response);
-    this.jqResponseSection.append(response.jqResponse);
+Question.prototype.addOption = function (option) {
+    this.options.push(option);
+    this.jqOptionSection.append(option.jqOption);
 };
 
-Question.prototype.removeResponse = function (index) {
-    this.responses[index].remove();
-    this.responses.splice(index, 1);
+Question.prototype.removeOption = function (index) {
+    this.options[index].remove();
+    this.options.splice(index, 1);
 }
 
 Question.prototype.remove = function () {
-    this.jqQuestion.remove();
+    var Question = this;
+    this.jqQuestion.hide("slow", function () {
+        Question.jqQuestion.remove();
+    });
+};
+
+Question.prototype.setPosition = function (position) {
+    this.jqQuestion.find(".question-position").html(position);
 };

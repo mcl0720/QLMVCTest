@@ -4,7 +4,7 @@
 
 @section Styles {
     <style type="text/css">
-        .questionframe {
+        .surveyframe, .questionframe {
             background-color: rgb(255, 255, 255);
             border-color: rgb(221, 221, 221);
             border-bottom-left-radius: 0px;
@@ -17,11 +17,23 @@
             color: rgb(51, 51, 51);
             margin: 15px 0px 15px 0px;
             padding: 15px;
+            position: relative;
         }
 
+        .surveyframe {
+            padding: 15px 15px 15px 30px;
+        }
+
+        .questionframe {
+            padding: 30px 15px 15px 35px;
+        }
+
+        .question-container {
+            display: none;
+        }
         .question-remove {
-            position: relative;
-            top: -28px;
+            position: absolute;
+            top: -10px;
             right: -10px;
         }
 
@@ -58,6 +70,22 @@
             height: 10px;
             background: rgba(0, 0, 0, .5);
         }
+
+        .move-wrapper {
+            position: relative;
+        }
+
+        .move-controls {
+            position: absolute;
+            width: 40px;
+            left: -50px;
+            top: -20px;
+        }
+
+        .move-control {
+            display: block;
+            width: 40px;
+        }
     </style>
 }
 
@@ -66,14 +94,14 @@
 </form>
 <div class="row">
     <div class="col-md-10">
-        <div id="survey-frame" class="questionframe">
+        <div id="survey-frame" class="surveyframe">
             <div class="add-indicator-first hidden"></div>
         </div>
     </div>
     <div class="col-md-2">
         <ul class="tt">
-            <li class="test"><a id="SurveyMultiResponse" href="#">one</a></li>
-            <li class="test"><a href="#" id="SurveySingleResponse">two</a></li>
+            <li class="test"><a id="SurveyMultiOption" href="#">one</a></li>
+            <li class="test"><a href="#" id="SurveySingleOption">two</a></li>
             <li class="test"><a href="#" id="three">three</a></li>
             <li class="test"><a href="#" id="four">four</a></li>
             <li class="test"><a href="#" id="five">five</a></li>
@@ -81,8 +109,11 @@
     </div>
 </div>
 <div id="hidden-markup" class="hidden">
-    @Html.Partial("SurveyResponseControls/AllSurveyResponseControls")
+    @Html.Partial("SurveyOptionControls/AllSurveyOptionControls")
 </div>
+@*<div class="question-position-popover" style="display: none">
+    Hello World!
+</div>*@
 
 @Scripts.Render("~/bundles/create/survey")
 
@@ -96,12 +127,17 @@
 
 
         var links = document.querySelectorAll('li.test > a'), el = null;
+        var draggable = false;
         for (var i = 0; i < links.length; i++) {
             el = links[i];
 
             el.setAttribute('draggable', 'true');
 
             addEvent(el, 'dragstart', function (e) {
+                console.log(e);
+                console.log(e.srcElement.attributes.draggable.value != "true");
+                if (e.srcElement.attributes.draggable.value == "true")
+                    draggable = true;
                 e.dataTransfer.effectAllowed = 'copy'; // only dropEffect='copy' will be dropable
                 e.dataTransfer.setData('Text', this.id); // required otherwise doesn't work
             });
@@ -119,8 +155,10 @@
         var insertPos = "";
 
         addEvent(surveyFrame, 'dragover', function (e) {
-            dragQuestion(e);
-            return false;
+            if (draggable) {
+                dragQuestion(e);
+                return false;
+            }
         });
 
         addEvent(surveyFrame, 'dragleave', function (e) {
@@ -138,8 +176,10 @@
 
         // to get IE to work
         addEvent(surveyFrame, 'dragenter', function (e) {
-            dragQuestion(e);
-            return false;
+            if (draggable) {
+                dragQuestion(e);
+                return false;
+            }
         });
 
         // Our dragging functionality
@@ -187,57 +227,89 @@
             if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting...why???
             var numQuestions = SurveyObject.questionNum();
 
-            if (numQuestions == 0 || (insertQuestion != null && insertPos != "")) {
-                var insertIndex = -1;
+            console.log(e);
+            if (draggable) {
+                if (numQuestions == 0 || (insertQuestion != null && insertPos != "")) {
+                    var insertIndex = -1;
 
-                // We are adding the first question
-                if (numQuestions == 0) {
-                    $(".add-indicator-first").addClass("hidden");
-                    insertIndex = 0;
-                }
-                else {
+                    // We are adding the first question
+                    if (numQuestions == 0) {
+                        $(".add-indicator-first").addClass("hidden");
+                        insertIndex = 0;
+                    }
+                    else {
 
-                    if (insertQuestion != null && insertPos != "") {
-                        $("div.add-indicator-bottom").addClass("hidden");
-                        $("div.add-indicator-top").addClass("hidden");
+                        if (insertQuestion != null && insertPos != "") {
+                            $("div.add-indicator-bottom").addClass("hidden");
+                            $("div.add-indicator-top").addClass("hidden");
 
-                        if (insertPos == "bottom") {
-                            insertIndex = insertQuestion.index() + 1;
-                        }
-                        else if (insertPos == "top") {
-                            if (insertQuestion.index() == 0) {
-                                insertIndex = 0;
+                            if (insertPos == "bottom") {
+                                insertIndex = insertQuestion.index() + 1;
                             }
-                            else {
-                                insertIndex = insertQuestion.index();
+                            else if (insertPos == "top") {
+                                if (insertQuestion.index() == 0) {
+                                    insertIndex = 0;
+                                }
+                                else {
+                                    insertIndex = insertQuestion.index();
+                                }
                             }
                         }
                     }
+                    SurveyObject.addQuestion(e.dataTransfer.getData('Text'), insertIndex);
                 }
-                SurveyObject.addQuestion(e.dataTransfer.getData('Text'), insertIndex);
             }
+            draggable = false;
+
         });
 
-        // Catch event to add responses
-        $("#survey-frame").on("click", ".add-response", function (e) {
+        // Catch event to add options
+        $("#survey-frame").on("click", ".add-option", function (e) {
             e.preventDefault(); // stop the page from scrolling because of link click
 
             var addControl = $(this);
-            var responseType = addControl.attr("data-response-type");
-            
+            var optionType = addControl.attr("data-option-type");
+
             //var jqResponse = SurveyObject.getResponse(responseType);
-            SurveyObject.addResponse(addControl.parents(".question-container").index(), responseType);
+            SurveyObject.addOption(addControl.parents(".question-container").index(), optionType);
         });
 
-        $("#survey-frame").on("click", ".single-response-radio-remove", function (e) {
+        $("#survey-frame").on("click", ".remove-option", function (e) {
             e.preventDefault(); // stop the page from scrolling because of link click
 
             //var addControl = $(this);
             //var responseType = addControl.attr("data-response-type");
 
             //var jqResponse = SurveyObject.getResponse(responseType);
-            SurveyObject.questions[$(this).parents(".question-container").index()].removeResponse($(this).parent().index());
+            SurveyObject.questions[$(this).parents(".question-container").index()].removeOption($(this).parent().index());
         });
+
+        $("#survey-frame").on("click", ".question-move-up", function (e) {
+            e.preventDefault(); // stop the page from scrolling because of link click
+            SurveyObject.moveQuestionUp($(this).parents(".question-container").index());
+        });
+
+        $("#survey-frame").on("click", ".question-move-down", function (e) {
+            e.preventDefault(); // stop the page from scrolling because of link click
+            SurveyObject.moveQuestionDown($(this).parents(".question-container").index());
+        });
+
+        //$("#survey-frame").on("click", ".question-position", function (e) {
+        //    e.preventDefault();
+        //    console.log($(".popover-content").length);
+        //    //if($(".popover-content").length > 1)
+        //    //    $(".question-position").popover("destroy");
+        //    //console.log(e);
+        //    //e.currentTarget.popover('toggle');
+        //    $(e.currentTarget).popover({
+        //        html: true,
+        //        placement: 'right',
+        //        trigger: 'manual',
+        //        content: function () {
+        //            return $('.question-position-popover').html();
+        //        }
+        //    }).popover("toggle");
+        //});
 
     </script>
 }

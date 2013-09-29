@@ -1,0 +1,13 @@
+﻿<div class="question-container">
+    <div class="add-indicator-top hidden"></div>
+    <div class="questionframe">
+        @Html.Partial("~/Views/Create/SurveyOptionControls/QuestionControls.cshtml")
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Enter question">
+        </div>
+        <div class="option-container">
+        </div>
+        <button type="button" class="btn btn-default add-option" data-option-type="single-option-radio">+ Add new option</button>
+    </div>
+    <div class="add-indicator-bottom hidden"></div>
+</div>
